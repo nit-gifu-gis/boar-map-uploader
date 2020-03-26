@@ -79,7 +79,8 @@ class Auth {
     }
 
     function hasPermission($jwt, $type = "") {
-        if($type !== "vaccine") return true;
+        if($type === "boar" || $type === "trap") return true;
+        if($type !== "vaccine") return false;
 
         $jwt_data = explode(".", $jwt);
         if(count($jwt_data) != 3) return false;

@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <title>Uploader HTML sample</title>
+        <meta charset="utf-8" />
+    </head>
+    <body>
+        <form name="form1" onsubmit="return false;">
+            <input type='file' name='file' id='file' value='Choose Photo' accept='image/png,image/jpeg' multiple/>
+            <button onClick="postImage()">送信</button>
+        </form>
+
+        <script type="text/javascript">
+            function postImage(){
+                var input = document.form1.file;
+                var data = new FormData();
+                for (const file of input.files) {
+                    console.log(file.name);
+                    data.append('files[]', file, file.name);
+                }
+
+                alert("ファイルのアップロードを開始します。")
+                fetch('http://localhost/GISImage/upload.php?type=boar', {
+                    method: 'POST',
+                    body: data,
+                    header: {
+                        "Content-Type": "multipart/form-data"
+                    }
+                }).then(response => response.text()
+                .then(json =>
+                    console.log(json),
+                    alert("ファイルのアップロードが完了しました。")
+                ));
+            }
+        </script>
+    </body>
+</html>

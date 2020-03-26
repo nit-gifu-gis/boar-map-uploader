@@ -31,7 +31,6 @@
         exit;
     }
 
-    // TODO: Add check photo is uploaded or not.
     if(empty($_GET['type'])) {
         echo '{ "status" : 400, "message" : "Check your arguments." }';
         exit;
@@ -41,16 +40,41 @@
         echo '{ "status" : 403, "message" : "You don\'t have permission to write." }';
         exit;
     }
-    
-    $uid = makeRandStr(20);
-    while($data->isExist($uid)) {
-        $uid = makeRandStr(20);
+
+    if(empty($_FILES["files"])) {
+        echo '{ "status" : 400, "message" : "Your request does not have any images." }';
+        exit;
     }
-
-    // 画像取得処理
-    $filename = "";
-
-    $data->register($uid, $_GET['type'], $filename);
-    echo '{ "status" : 200, "message" : "OK." }';
+    
+    $resp = array(
+        "status" => 200,
+        "results" => array()
+    );
+    
+    foreach ($_FILES["files"]["error"] as $key => $error) {
+        if ($error == UPLOAD_ERR_OK) {
+            $uid = makeRandStr(15);
+            while($data->isExist($uid)) {
+                $uid = makeRandStr(20);
+            }
+            $tmp_name = $_FILES["files"]["tmp_name"][$key];
+            $name = basename($_FILES["files"]["name"][$key]);
+            $ext = substr($name, strrpos($name, '.') + 1);
+            move_uploaded_file($tmp_name, __DIR__ . "/images/" . $_GET['type'] . "/" . $uid . "." . $ext);
+            echo "Moved to: " . __DIR__ . "/images/" . $_GET['type'] . "/" . $uid . "." . $ext;
+            $resp["results"][count($resp["results"])] = array(
+                "error"=>$error,
+                "id"=>$uid 
+            );
+            $data->register($uid, $_GET['type'], $uid . "." . $ext);
+        } else {
+            $resp["results"][count($resp["results"])] = array(
+                "error"=>$error,
+                "id"=>"" 
+            );
+        }
+    }
+    
+    echo json_encode($resp);
 
 ?>
