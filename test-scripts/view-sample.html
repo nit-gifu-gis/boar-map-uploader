@@ -5,9 +5,14 @@
     </head>
     <body>
         <form name="form1" onsubmit="return false;">
-            表示したい画像ID: <input type="text" name="uid" /> 画像種別(boar, trap, vaccine): <input type="text" name="typ" />
+            表示したい画像ID: <input type="text" name="uid" /><br>
+            画像種別(boar, trap, vaccine): <input type="text" name="typ" />
             <button onClick="addImage()">追加</button>
         </form>
+
+        <a href="./auth-sample.html">認証テスト</a>
+        <a href="./post-sample.html">アップロードテスト</a>
+        <a href="http://localhost/logout.php">認証解除</a>
 
         <div id="photos"></div>
 

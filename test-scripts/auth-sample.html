@@ -5,26 +5,41 @@
     </head>
     <body>
         <form name="form1" onsubmit="return false;">
-            いのししマップぎふのアクセストークン: <input type="text" name="token"> ユーザー名: <input type="text" name="user"> アクセス期限: <input type="text" name="exp">
+            いのししマップぎふの<br>
+            access_token: <input type="text" name="token"><br>
+            user: <input type="text" name="user"><br>
+            login_time: <input type="text" name="exp"><br>
             <button onClick="login()">ログイン</button>
         </form>
+        
+        <a href="./post-sample.html">アップロードテスト</a>
+        <a href="./view-sample.html">表示テスト</a>
+        <a href="http://localhost/logout.php">認証解除</a>
 
         <script type="text/javascript">
             function login() {
                 var token = document.form1.token.value;
                 var user = document.form1.user.value;
                 var exp = document.form1.exp.value;
+                exp = exp * 6 * 60 * 60 * 1000;
                 var data = {
                     "token": token,
                     "user": user,
                     "expires_in": exp
                 }
                 console.log("ログインリクエストを送信しました。");
-                fetch('http://localhost/GISImage/auth.php', {
+                fetch('http://localhost/auth.php', {
+                    credentials: "include",
                     method: 'POST',
                     body: JSON.stringify(data)
-                }).then(response => response.text()
-                .then(text => alert(text)));
+                }).then(response => response.json()
+                .then(json => {
+                    if (json["status"] == 200) {
+                        alert("ログインに成功しました。")
+                    } else {
+                        alert("ログインに失敗しました。")
+                    }
+                }));
             }
         </script>
     </body>

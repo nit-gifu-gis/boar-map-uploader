@@ -39,7 +39,7 @@
         exit;
     }
 
-    if(!$auth_util->hasPermission($type)){
+    if(!$auth_util->hasPermission($_COOKIE['jwt'], $type)){
         show_img('./images/error_permission.jpg');
         exit;
     }

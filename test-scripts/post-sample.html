@@ -5,31 +5,48 @@
     </head>
     <body>
         <form name="form1" onsubmit="return false;">
+            アップロードするタイプ(boar, trap, vaccine) <input type="text" name="typ" value="boar"/><br>
             <input type='file' name='file' id='file' value='Choose Photo' accept='image/png,image/jpeg' multiple/>
             <button onClick="postImage()">送信</button>
         </form>
 
+        <a href="./auth-sample.html">認証テスト</a>
+        <a href="./view-sample.html">表示テスト</a>
+        <a href="http://localhost/logout.php">認証解除</a>
+
         <script type="text/javascript">
             function postImage(){
                 var input = document.form1.file;
+                var typ = document.form1.typ.value;
                 var data = new FormData();
                 for (const file of input.files) {
-                    console.log(file.name);
                     data.append('files[]', file, file.name);
                 }
 
                 alert("ファイルのアップロードを開始します。")
-                fetch('http://localhost/upload.php?type=boar', {
+                fetch('http://localhost/upload.php?type=' + typ, {
+                    credentials: "include",
                     method: 'POST',
                     body: data,
                     header: {
                         "Content-Type": "multipart/form-data"
                     }
-                }).then(response => response.text()
-                .then(json =>
-                    console.log(json),
-                    alert("ファイルのアップロードが完了しました。")
-                ));
+                }).then(response => response.json()
+                .then(json => {
+                    if(json["status"] == 200) {
+                        var str = "ファイルのアップロードが完了しました。";
+                        json["results"].forEach(element => {
+                            if(element["error"] != 0) {
+                                str += "\nエラー: " + element["error"];
+                            } else {
+                                str += "\n成功 (ID: " + element["id"] + ")";
+                            }
+                        });
+                        alert(str);
+                    } else {
+                        alert("エラー: \n" + json["message"]);
+                    }
+                }));
             }
         </script>
     </body>
