@@ -68,6 +68,6 @@
         setcookie('jwt', $jwt);
         echo '{ "status" : 200 }';
     } else {
-        echo '{ "status" : 400 }';
+        echo '{ "status" : 401 }';
     }
 ?>

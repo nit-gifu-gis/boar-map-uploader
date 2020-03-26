@@ -12,9 +12,6 @@
     include_once __DIR__ . "/utils/auth.php";
     $auth_util = new Auth();
 
-    include_once __DIR__ . "/utils/data.php";
-    $data = new DataManager();
-
     if(empty($_COOKIE['jwt'])) {
         show_img('./images/error_login.jpg');
         exit;
@@ -30,21 +27,22 @@
         exit;
     }
         
-    if(empty($_GET['id'])) {
+    if(empty($_GET['id']) || empty($_GET['type'])) {
         show_img('./images/error_parameter.jpg');
         exit;
     }
+    $type = basename($_GET["type"]);
+    $id = basename($_GET["id"]);
 
-    $info = $data->getInfo($_GET['id']);
-    if($info == null) {
+    if(!file_exists(__DIR__ . "/images/" . $type . "/" . $id)) {
         show_img('./images/error_notfound.jpg');
         exit;
     }
 
-    if(!$auth_util->hasPermission($info["type"])){
+    if(!$auth_util->hasPermission($type)){
         show_img('./images/error_permission.jpg');
         exit;
     }
 
-    show_img('./images/' . $info["type"] . "/" . $info["uid"] . "-" . $info["filename"]);
+    show_img('./images/' . $type . "/" . $id);
 ?>
