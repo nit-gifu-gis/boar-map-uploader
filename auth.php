@@ -5,16 +5,12 @@
     $auth_util = new Auth();
 
     $str_in = file_get_contents("php://input");
-    $str_in = '{ "user" : "test", "token" : "d8cf0892-64a5-4527-8855-30d50b4108a5", "expires_in" : ' . (time() + 3600) . ' }';
     $json = json_decode($str_in);
 
     $user = $json->{"user"};
     $token = $json->{"token"};
     $expires_in = $json->{"expires_in"};
 
-    /*
-     * Authenticate with token.
-     */
     $rnum = random_int(0, 100000);
     $body = array(
         "commonHeader"=>array(
