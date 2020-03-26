@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <title>Uploader HTML sample</title>
+        <meta charset="utf-8" />
+    </head>
+    <body>
+        <form name="form1" onsubmit="return false;">
+            表示したい画像ID: <input type="text" name="uid" /> 画像種別(boar, trap, vaccine): <input type="text" name="typ" />
+            <button onClick="addImage()">追加</button>
+        </form>
+
+        <div id="photos"></div>
+
+        <script type="text/javascript">
+            function addImage() {
+                var div = document.getElementById("photos");
+                var uid = document.form1.uid.value;
+                var typ = document.form1.typ.value;
+                str = '<img src="http://localhost/view.php?id=' + uid + '&type=' + typ + '"><br>';
+                div.insertAdjacentHTML('afterbegin', str);
+            }
+        </script>
+    </body>
+</html>
