@@ -34,7 +34,19 @@
     $type = basename($_GET["type"]);
     $id = basename($_GET["id"]);
 
-    if(!file_exists(__DIR__ . "/images/" . $type . "/" . $id)) {
+    $ext = substr($_GET["id"], 0, 1);
+    switch($ext) {
+        case "j":
+            $ext = "jpg";
+            break;
+        case "p":
+            $ext = "png";
+            break;
+        default:
+            $ext = "null";
+    }
+
+    if(!file_exists(__DIR__ . "/images/" . $type . "/" . $id . "." . $ext)) {
         show_img('./images/error_notfound.jpg');
         exit;
     }
@@ -44,5 +56,5 @@
         exit;
     }
 
-    show_img('./images/' . $type . "/" . $id);
+    show_img('./images/' . $type . "/" . $id . "." . $ext);
 ?>
