@@ -11,6 +11,10 @@
     date_default_timezone_set ("Asia/Tokyo");
     include_once __DIR__ . "/utils/auth.php";
     $auth_util = new Auth();
+    if($auth_util->isDepCheckAvailable()) {
+        echo "依存関係チェック用ファイルが削除されていません。使用開始前に削除して下さい。";
+        exit;
+    }
 
     if(empty($_COOKIE['jwt'])) {
         show_img('./images/error_login.jpg');

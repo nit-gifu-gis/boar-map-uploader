@@ -1,6 +1,10 @@
 <?php
 date_default_timezone_set ("Asia/Tokyo");
 class Auth {
+    function isDepCheckAvailable() {
+        return file_exists(__DIR__ . "/../depcheck.php");
+    }
+
     function base64_urlsafe_encode($val) {
         $val = base64_encode($val);
         return str_replace(array('+', '/', '='), array('_', '-', ''), $val);
