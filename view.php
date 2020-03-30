@@ -11,6 +11,10 @@
     date_default_timezone_set ("Asia/Tokyo");
     include_once __DIR__ . "/utils/auth.php";
     $auth_util = new Auth();
+    if($auth_util->isDepCheckAvailable()) {
+        echo "依存関係チェック用ファイルが削除されていません。使用開始前に削除して下さい。";
+        exit;
+    }
 
     if(empty($_COOKIE['jwt'])) {
         show_img('./images/error_login.jpg');
@@ -34,7 +38,19 @@
     $type = basename($_GET["type"]);
     $id = basename($_GET["id"]);
 
-    if(!file_exists(__DIR__ . "/images/" . $type . "/" . $id)) {
+    $ext = substr($_GET["id"], 0, 1);
+    switch($ext) {
+        case "j":
+            $ext = "jpg";
+            break;
+        case "p":
+            $ext = "png";
+            break;
+        default:
+            $ext = "null";
+    }
+
+    if(!file_exists(__DIR__ . "/images/" . $type . "/" . $id . "." . $ext)) {
         show_img('./images/error_notfound.jpg');
         exit;
     }
@@ -44,5 +60,5 @@
         exit;
     }
 
-    show_img('./images/' . $type . "/" . $id);
+    show_img('./images/' . $type . "/" . $id . "." . $ext);
 ?>
