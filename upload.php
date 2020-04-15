@@ -15,6 +15,7 @@
 
     include_once __DIR__ . "/utils/cors.php";
     date_default_timezone_set ("Asia/Tokyo");
+    include_once __DIR__ . "/utils/clean.php";
     include_once __DIR__ . "/utils/auth.php";
     $auth_util = new Auth();
     if($auth_util->isEnvCheckAvailable()) {
@@ -83,14 +84,15 @@
                     $ext = "null";
                 }
 
-                while(file_exists(__DIR__ . "/images/" . $type . "/" . $uid . "." . $ext)) {
+                while(file_exists(__DIR__ . "/images/temp/" . $type . "/" . $uid . "." . $ext) 
+                    || file_exists(__DIR__ . "/images/" . $type . "/" . $uid . "." . $ext)) {
                     $uid = makeRandStr(20);
                 }
                 $tmp_name = $_FILES["files"]["tmp_name"][$key];
                 $name = basename($_FILES["files"]["name"][$key]);
                 $ext = substr($name, strrpos($name, '.') + 1);
-                move_uploaded_file($tmp_name, __DIR__ . "/images/" . $_GET['type'] . "/" . $uid . "_");
-                $file = __DIR__ . "/images/" . $_GET['type'] . "/" . $uid . "_";
+                move_uploaded_file($tmp_name, __DIR__ . "/images/temp/" . $_GET['type'] . "/" . $uid . "_");
+                $file = __DIR__ . "/images/temp/" . $_GET['type'] . "/" . $uid . "_";
                 
                 list($w, $h, $t) = getimagesize($file);
 
@@ -120,7 +122,7 @@
                     imagesavealpha($canvas, true);
                 }
                 imagecopyresampled($canvas, $orig, 0,0,0,0, $width, $height, $w, $h);
-                $path = __DIR__ . "/images/" . $_GET['type'] . "/" . $uid . "." . $ext;
+                $path = __DIR__ . "/images/temp/" . $_GET['type'] . "/" . $uid . "." . $ext;
 
                 if($t == IMAGETYPE_JPEG) {
                     imagejpeg($canvas, $path);

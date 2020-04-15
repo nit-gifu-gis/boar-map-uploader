@@ -23,6 +23,7 @@
                     data.append('files[]', file, file.name);
                 }
 
+                const ids = []
                 alert("ファイルのアップロードを開始します。")
                 fetch('http://localhost/upload.php?type=' + typ, {
                     credentials: "include",
@@ -36,6 +37,10 @@
                     if(json["status"] == 200) {
                         var str = "ファイルのアップロードが完了しました。";
                         json["results"].forEach(element => {
+                            ids.push({
+                                id: element["id"],
+                                error: element["error"]
+                            });
                             if(element["error"] != 0) {
                                 str += "\nエラー: " + element["error"];
                             } else {
@@ -47,6 +52,12 @@
                         alert("エラー: \n" + json["message"]);
                     }
                 }));
+
+                fetch('http://localhost/publish.php?type=' + typ, {
+                    credentials: "include",
+                    method: 'POST',
+                    body: JSON.stringify(ids)
+                }).then(_ => console.log("画像確定完了"));
             }
         </script>
     </body>
