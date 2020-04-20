@@ -84,8 +84,15 @@
                     $ext = "null";
                 }
 
+                $ext2 = "";
+                if($ext === "jpg") {
+                    $ext2 = "jpeg";
+                }
+
                 while(file_exists(__DIR__ . "/images/temp/" . $type . "/" . $uid . "." . $ext) 
-                    || file_exists(__DIR__ . "/images/" . $type . "/" . $uid . "." . $ext)) {
+                    || file_exists(__DIR__ . "/images/" . $type . "/" . $uid . "." . $ext)
+                    || file_exists(__DIR__ . "/images/temp" . $type . "/" . $uid . "." . $ext2)
+                    || file_exists(__DIR__ . "/images/" . $type . "/" . $uid . "." . $ext2)) {
                     $uid = makeRandStr(20);
                 }
                 $tmp_name = $_FILES["files"]["tmp_name"][$key];
