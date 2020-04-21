@@ -84,20 +84,12 @@
                     $ext = "null";
                 }
 
-                $ext2 = "";
-                if($ext === "jpg") {
-                    $ext2 = "jpeg";
-                }
-
                 while(file_exists(__DIR__ . "/images/temp/" . $type . "/" . $uid . "." . $ext) 
-                    || file_exists(__DIR__ . "/images/" . $type . "/" . $uid . "." . $ext)
-                    || file_exists(__DIR__ . "/images/temp" . $type . "/" . $uid . "." . $ext2)
-                    || file_exists(__DIR__ . "/images/" . $type . "/" . $uid . "." . $ext2)) {
+                    || file_exists(__DIR__ . "/images/" . $type . "/" . $uid . "." . $ext)) {
                     $uid = makeRandStr(20);
                 }
                 $tmp_name = $_FILES["files"]["tmp_name"][$key];
                 $name = basename($_FILES["files"]["name"][$key]);
-                $ext = substr($name, strrpos($name, '.') + 1);
                 move_uploaded_file($tmp_name, __DIR__ . "/images/temp/" . $_GET['type'] . "/" . $uid . "_");
                 $file = __DIR__ . "/images/temp/" . $_GET['type'] . "/" . $uid . "_";
                 

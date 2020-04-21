@@ -51,12 +51,8 @@
     }
 
     if(!file_exists(__DIR__ . "/images/" . $type . "/" . $id . "." . $ext)) {
-        if($ext === "jpg" && file_exists(__DIR__ . "/images/" . $type . "/" . $id . ".jpeg")) {
-            $ext = "jpeg";
-        } else {
-            show_img('./images/error_notfound.jpg');
-            exit;
-        }
+        show_img('./images/error_notfound.jpg');
+        exit;
     }
 
     if(!$auth_util->hasPermission($_COOKIE['jwt'], $type)){

@@ -57,11 +57,6 @@
             }
             if(file_exists(__DIR__ . "/images/temp/" . $type . "/" . $id . "." . $ext)) {
                 rename(__DIR__ . "/images/temp/" . $type . "/" . $id . "." . $ext, __DIR__ . "/images/" . $type . "/" . $id . "." . $ext);
-            } else if($ext === "jpg") {
-                $ext = "jpeg";
-                if(file_exists(__DIR__ . "/images/temp/" . $type . "/" . $id . "." . $ext)) {
-                    rename(__DIR__ . "/images/temp/" . $type . "/" . $id . "." . $ext, __DIR__ . "/images/" . $type . "/" . $id . "." . $ext);
-                }
             }
         }
     }
