@@ -16,10 +16,10 @@
              */
             $isDepPassed = true;
             if(extension_loaded('gd')){
-                echo "php-gdは利用可能です。<br>";
+                echo "php-gdは利用可能です。<br>" . PHP_EOL;
             } else {
                 $isDepPassed = false;
-                echo "php-gdは現在利用できません。インストール/有効化して下さい。<br>" . PHP_EOL;
+                echo "<font color=\"#ed0000\">php-gdは現在利用できません。インストール/有効化して下さい。</font><br>" . PHP_EOL;
             }
             if($isDepPassed) {
                 echo "<font color=\"#00d438\">依存ライブラリに問題はありません。</font><br><br>" . PHP_EOL;
@@ -39,6 +39,21 @@
                 "upload.php",
                 "publish.php",
                 "view.php",
+                "admin/",
+                "admin/index.php",
+                "admin/login.php",
+                "admin/logout.php",
+                "admin/",
+                "admin/delete.php",
+                "admin/download.php",
+                "admin/list.php",
+                "admin/search.php",
+                "admin/info.php",
+                "admin/view.php",
+                "admin/utils/",
+                "admin/utils/config.php",
+                "admin/utils/image.php",
+                "admin/utils/session.php",
                 "utils/",
                 "utils/auth.php",
                 "utils/cors.php",
@@ -67,18 +82,18 @@
 
             foreach($check_exist as $path) {
                 if(file_exists(__DIR__ . "/" . $path)) {
-                    echo "" . __DIR__ . "/" . $path . "は存在します。<br>";
+                    echo "" . __DIR__ . "/" . $path . "は存在します。<br>" . PHP_EOL;
                 } else {
-                    echo ">> " . __DIR__ . "/" . $path . "が存在しません。アップロード漏れ/設定漏れがないか確認して下さい。<br>";
+                    echo "<font color=\"#ed0000\">>> " . __DIR__ . "/" . $path . "が存在しません。アップロード漏れ/設定漏れがないか確認して下さい。</font><br>" . PHP_EOL;
                     $isFilePassed = false;
                 }
             }
 
             foreach($check_notfound as $path) {
                 if(!file_exists(__DIR__ . "/" . $path)) {
-                    echo "" . __DIR__ . "/" . $path . "は存在しません。<br>";
+                    echo "" . __DIR__ . "/" . $path . "は存在しません。<br>" . PHP_EOL;
                 } else {
-                    echo ">> " . __DIR__ . "/" . $path . "が存在します。削除して下さい。<br>";
+                    echo "<font color=\"#ed0000\">>> " . __DIR__ . "/" . $path . "が存在します。削除して下さい。</font><br>" . PHP_EOL;
                     $isFilePassed = false;
                 }
             }
@@ -101,6 +116,21 @@
                 "upload.php",
                 "publish.php",
                 "view.php",
+                "admin/",
+                "admin/index.php",
+                "admin/login.php",
+                "admin/logout.php",
+                "admin/",
+                "admin/delete.php",
+                "admin/download.php",
+                "admin/list.php",
+                "admin/search.php",
+                "admin/info.php",
+                "admin/view.php",
+                "admin/utils/",
+                "admin/utils/config.php",
+                "admin/utils/image.php",
+                "admin/utils/session.php",
                 "utils/",
                 "utils/auth.php",
                 "utils/cors.php",
@@ -133,9 +163,9 @@
 
             foreach($check_read as $path) {
                 if (is_readable(__DIR__ . "/" . $path)) {
-                    echo "phpから" . __DIR__ . "/" . $path . "の読み込みが可能です。<br>";
+                    echo "phpから" . __DIR__ . "/" . $path . "の読み込みが可能です。<br>" . PHP_EOL;
                 } else {
-                    echo ">> phpから" . __DIR__ . "/" . $path . "の読み込みができません。アクセス権限を変更して下さい。<br>";
+                    echo "<font color=\"#ed0000\">>> phpから" . __DIR__ . "/" . $path . "の読み込みができません。アクセス権限を変更して下さい。</font><br>" . PHP_EOL;
                     $isPermPassed = false;
                 }
             }
@@ -143,9 +173,9 @@
             echo "<br>";
             foreach($check_write as $path) {
                 if (is_writable(__DIR__ . "/" . $path)) {
-                    echo "phpから" . __DIR__ . "/" . $path . "への書き込みが可能です。<br>";
+                    echo "phpから" . __DIR__ . "/" . $path . "への書き込みが可能です。<br>" . PHP_EOL;
                 } else {
-                    echo ">> phpから" . __DIR__ . "/" . $path . "への書き込みができません。アクセス権限を変更して下さい。<br>";
+                    echo "<font color=\"#ed0000\">>> phpから" . __DIR__ . "/" . $path . "への書き込みができません。アクセス権限を変更して下さい。</font><br>" . PHP_EOL;
                     $isPermPassed = false;
                 }
             }
@@ -155,6 +185,10 @@
             $base = str_replace("envcheck.php", "", $base);
 
             $check_access = array(
+                "admin/utils/",
+                "admin/utils/config.php",
+                "admin/utils/image.php",
+                "admin/utils/session.php",
                 "utils/",
                 "utils/auth.php",
                 "utils/cors.php",
@@ -196,10 +230,10 @@
                 preg_match("/[0-9]{3}/", $http_response_header[0], $stcode);
 
                 if(intval($stcode[0]) != 403) {
-                    echo ">> Web経由で" . $path . "に外部からアクセスが可能です。アクセス権限を変更して下さい。(" . $stcode[0] . ")<br>";
+                    echo "<font color=\"#ed0000\">>> Web経由で" . $path . "に外部からアクセスが可能です。アクセス権限を変更して下さい。(" . $stcode[0] . ")</font><br>" . PHP_EOL;
                     $isPermPassed = false;
                 } else {
-                    echo "Web経由での" . $path . "へのアクセスは拒否されました。(" . $stcode[0] . ")<br>";
+                    echo "Web経由での" . $path . "へのアクセスは拒否されました。(" . $stcode[0] . ")<br>" . PHP_EOL;
                 }
             }
 
