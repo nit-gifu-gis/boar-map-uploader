@@ -30,6 +30,8 @@
             return null;
         }
 
+        if(empty($_SESSION["err"])) return null;
+        
         $err = $_SESSION["err"];
         $_SESSION["err"] = null;
         return $err;

@@ -20,14 +20,8 @@
         <main>
             <div class="head_margin"></div>
             <div class="container">
-                <h2 class="subtitle">管理者用トップページ</h2>
+                <h2 class="subtitle">画像検索</h2>
                 <br>
-                <p>
-                    <?php echo get_user(); ?>さん、ようこそ！<br>
-                    このサイトでは、アップロードされた画像の検索、表示、削除、ダウンロードを行うことができます。<br>
-                    <br>
-                    上のナビゲーションバーから各ページに移動することが可能です。
-                </p>
             </div>
         </main>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
