@@ -65,7 +65,7 @@
         $payload_s = $auth_util->base64_urlsafe_encode(json_encode($payload));
         $signature = $auth_util->createSignature($header_s, $payload_s);
         $jwt = $header_s . "." . $payload_s . "." . $signature;
-        setcookie('jwt', $jwt);
+        header('Set-Cookie: jwt=' . $jwt . '; SameSite=None; Secure');
         echo '{ "status" : 200 }';
     } else {
         echo '{ "status" : 401 }';
